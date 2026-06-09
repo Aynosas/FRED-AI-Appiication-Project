@@ -8,10 +8,7 @@ const MAX_FILE_SIZE_MB = 50;
 const MAX_FILE_SIZE_BYTES = MAX_FILE_SIZE_MB * 1024 * 1024;
 
 // ─────────────────────────────────────────────────────────────
-// UPLOAD STATES — treat these like a state machine.
-// The component is always in exactly one of these states.
-// Interview talking point: explicit states prevent impossible
-// UI combinations (e.g. showing "success" and "error" at once).
+// UPLOAD STATES 
 // ─────────────────────────────────────────────────────────────
 const STATES = {
   IDLE: "idle",
@@ -24,10 +21,6 @@ const STATES = {
 
 // ─────────────────────────────────────────────────────────────
 // FILE VALIDATOR
-// Runs client-side before the file ever touches the network.
-// Interview talking point: always validate on the client AND
-// the server. Client validation is for UX; server validation
-// is for security. Never trust only one.
 // ─────────────────────────────────────────────────────────────
 function validateFile(file) {
   if (!file) return { valid: false, error: "No file selected." };
@@ -90,10 +83,6 @@ export default function DataUpload({
   const fileInputRef = useRef(null);
 
   // ── DRAG & DROP HANDLERS ────────────────────────────────────
-  // Interview talking point: drag-and-drop requires 4 events.
-  // dragenter/dragover must call preventDefault() or the browser
-  // won't allow the drop. dragenter sets the visual state;
-  // dragleave clears it; drop does the actual work.
 
   const handleDragEnter = useCallback((e) => {
     e.preventDefault();
@@ -150,10 +139,7 @@ export default function DataUpload({
   };
 
   // ── UPLOAD HANDLER ──────────────────────────────────────────
-  // Uses XMLHttpRequest instead of fetch so we can track progress.
-  // Interview talking point: fetch doesn't expose upload progress.
-  // XHR's onprogress event lets us show a real progress bar —
-  // important UX for large files.
+
   const handleUpload = () => {
     if (!selectedFile) return;
 
